@@ -1,9 +1,9 @@
 pub fn licence() -> &'static str {
     "## License
 
-The license file is: `LICENSE`
+The license file is `LICENSE`.
 
-This project is licensed under the BSD Zero Clause License (0BSD).
+This project is licensed under the BSD Zero Clause license (0BSD).
 
 Links for more information on the license:
 
