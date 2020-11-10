@@ -8,9 +8,10 @@
 main = src/main.rs
 side-effects = src/side_effects.rs
 sections = src/sections/
-checks = $(sections)changelog.rs $(sections)contributing.rs $(sections)documentation.rs \
-$(sections)example_use.rs $(sections)license.rs $(sections)overview.rs \
-$(sections)top_heading.rs $(sections)versions.rs
+checks = $(sections)changelog.rs $(sections)contributing.rs \
+$(sections)documentation.rs $(sections)example_use.rs \
+$(sections)license.rs $(sections)overview.rs \
+$(sections)versions.rs
 rust-files = $(main) $(side-effects) $(checks)
 
 #######
