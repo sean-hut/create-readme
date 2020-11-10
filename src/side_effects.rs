@@ -23,11 +23,26 @@ const BLANK_LINE: &str = "\n\n";
 pub fn create_readme(arguments: ArgMatches) {
     let mut file = open_readme();
 
-    append(&mut file, top_heading());
-    append(&mut file, BLANK_LINE);
+    let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
     append(&mut file, overview());
     append(&mut file, BLANK_LINE);
+    match arguments.value_of("top-heading") {
+        Some(heading) => {
+            append(&mut file, "# ");
+            append(&mut file, heading);
+            append(&mut file, BLANK_LINE);
+
+            if verbose {
+                println!("Top heading appended")
+            }
+        }
+        None => {
+            eprintln!("Text for the top heading must be provided.");
+            exit(1);
+        }
+    }
+
 
     append(&mut file, example_use());
     append(&mut file, BLANK_LINE);
