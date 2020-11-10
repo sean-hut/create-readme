@@ -81,8 +81,45 @@ pub fn create_readme(arguments: ArgMatches) {
         }
     }
 
-    append(&mut file, licence());
-    append(&mut file, BLANK_LINE);
+    match arguments.occurrences_of("license-exclude") {
+        0 => {
+            append(&mut file, LICENCE);
+
+            match arguments.value_of("license") {
+                Some(heading) => match heading {
+                    "0bsd" => append(&mut file, BSD0),
+                    "mit0" => append(&mut file, MIT0),
+                    "unlicense" => append(&mut file, UNLICENSE),
+                    "cc0" => append(&mut file, CC0),
+                    _ => {
+                        eprintln!("Invalid license");
+                        exit(1);
+                    }
+                },
+                None => {
+                    eprintln!("Must provide licence");
+                    exit(1);
+                }
+            }
+
+            append(&mut file, BLANK_LINE);
+
+            if verbose {
+                println!("Licence section appended")
+            }
+        }
+        1 => {
+            if verbose {
+                println!("License section excluded")
+            }
+        }
+
+        _ => {
+            eprintln!("Only one --disable-licence allowed.");
+            exit(1);
+        }
+    }
+
 
     append(&mut file, documentation());
     append(&mut file, BLANK_LINE);
