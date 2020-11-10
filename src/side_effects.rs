@@ -200,8 +200,25 @@ pub fn create_readme(arguments: ArgMatches) {
         }
     }
 
+    match arguments.occurrences_of("contributing-exclude") {
+        0 => {
+            append(&mut file, contributing());
 
-    append(&mut file, contributing());
+            if verbose {
+                println!("Contributing section appended")
+            }
+        }
+        1 => {
+            if verbose {
+                println!("Contributing section excluded")
+            }
+        }
+        _ => {
+            eprintln!("Only one --disable-contributing allowed.");
+            exit(1);
+        }
+    }
+
 }
 
 fn open_readme() -> File {
