@@ -120,9 +120,27 @@ pub fn create_readme(arguments: ArgMatches) {
         }
     }
 
+    match arguments.occurrences_of("documentation-exclude") {
+        0 => {
+            append(&mut file, documentation());
+            append(&mut file, BLANK_LINE);
 
-    append(&mut file, documentation());
-    append(&mut file, BLANK_LINE);
+            if verbose {
+                println!("Documentation section appended")
+            }
+        }
+        1 => {
+            if verbose {
+                println!("Documentation section excluded")
+            }
+        }
+        _ => {
+            eprintln!("Only one --disable-documentation allowed.");
+            exit(1);
+        }
+    }
+
+
 
     append(&mut file, CHANGELOG);
     append(&mut file, BLANK_LINE);
