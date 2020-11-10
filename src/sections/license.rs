@@ -40,3 +40,17 @@ Links for more information on the license:
 [fsf-unlicense]: <https://web.archive.org/web/20201108145518/http://www.gnu.org/licenses/license-list.html#Unlicense>
 [github-unlicense]: <https://web.archive.org/web/20200905083506/https://choosealicense.com/licenses/unlicense/>";
 
+pub const CC0: &str =
+    "This project is licensed under the CC0 1.0 Universal Public Domain Dedication (CC0-1.0).
+
+Links for more information on the license:
+
+- [License Commentary][cc0]
+- [Freqently Asked Questions CC0][cc0-faq]
+- [Human Readable CC0][human-readable-cc0]
+- [Free Software Foundation][fsf-cc0]
+
+[cc0]: <https://web.archive.org/web/20201106232828/http://creativecommons.org/share-your-work/public-domain/cc0>
+[cc0-faq]: <https://web.archive.org/web/20201106232523/https://wiki.creativecommons.org/wiki/CC0_FAQ>
+[human-readable-cc0]: <https://web.archive.org/web/20201109083355/https://creativecommons.org/publicdomain/zero/1.0/>
+[fsf-cc0]: <https://web.archive.org/web/20201108145518/http://www.gnu.org/licenses/license-list.html#CC0>";
