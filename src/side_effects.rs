@@ -180,10 +180,26 @@ pub fn create_readme(arguments: ArgMatches) {
         }
     }
 
+    match arguments.occurrences_of("stable-version-exclude") {
+        0 => {
+            append(&mut file, stable_version());
+            append(&mut file, BLANK_LINE);
 
+            if verbose {
+                println!("Stable version section appended")
+            }
+        }
+        1 => {
+            if verbose {
+                println!("Stable version section excluded")
+            }
+        }
+        _ => {
+            eprintln!("Only one --disable-stable-version allowed.");
+            exit(1);
+        }
+    }
 
-    append(&mut file, stable_version());
-    append(&mut file, BLANK_LINE);
 
     append(&mut file, contributing());
 }
