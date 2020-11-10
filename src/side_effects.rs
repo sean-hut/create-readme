@@ -140,10 +140,26 @@ pub fn create_readme(arguments: ArgMatches) {
         }
     }
 
+    match arguments.occurrences_of("changelog-exclude") {
+        0 => {
+            append(&mut file, CHANGELOG);
+            append(&mut file, BLANK_LINE);
 
+            if verbose {
+                println!("Changelog section appended")
+            }
+        }
+        1 => {
+            if verbose {
+                println!("Changelog section excluded")
+            }
+        }
+        _ => {
+            eprintln!("Only one --disable-changelog allowed.");
+            exit(1);
+        }
+    }
 
-    append(&mut file, CHANGELOG);
-    append(&mut file, BLANK_LINE);
 
     append(&mut file, development_version());
     append(&mut file, BLANK_LINE);
