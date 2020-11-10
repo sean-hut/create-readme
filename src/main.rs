@@ -19,4 +19,19 @@ fn main() {
                 .display_order(1)
                 .help("Top heading text that follows \"# \""),
         )
+        .arg(
+            Arg::with_name("license")
+                .long("license")
+                .short("l")
+                .value_name("LICENSE")
+                .possible_value("0bsd")
+                .possible_value("mit0")
+                .possible_value("unlicense")
+                .possible_value("cc0")
+                .required(true)
+                .takes_value(true)
+                .multiple(false)
+                .display_order(2)
+                .help("Select a LICENSE"),
+        )
 }
