@@ -34,6 +34,14 @@ fn main() {
                 .help("Select a LICENSE"),
         )
         .arg(
+            Arg::with_name("overwrite")
+                .long("overwrite")
+                .short("O")
+                .multiple(false)
+                .display_order(1)
+                .help("Overwrite README.md"),
+        )
+        .arg(
             Arg::with_name("overview-exclude")
                 .long("exclude-overview")
                 .short("o")
