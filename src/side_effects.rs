@@ -61,9 +61,25 @@ pub fn create_readme(arguments: ArgMatches) {
         }
     }
 
+    match arguments.occurrences_of("example-use-exclude") {
+        0 => {
+            append(&mut file, example_use());
+            append(&mut file, BLANK_LINE);
 
-    append(&mut file, example_use());
-    append(&mut file, BLANK_LINE);
+            if verbose {
+                println!("Example use section appended")
+            }
+        }
+        1 => {
+            if verbose {
+                println!("Example use section excluded")
+            }
+        }
+        _ => {
+            eprintln!("Only one --disable-example-use allowed.");
+            exit(1);
+        }
+    }
 
     append(&mut file, licence());
     append(&mut file, BLANK_LINE);
