@@ -20,7 +20,7 @@ const README: &str = "README.md";
 
 const BLANK_LINE: &str = "\n\n";
 
-pub fn create_readme() {
+pub fn create_readme(arguments: ArgMatches) {
     let mut file = open_readme();
 
     append(&mut file, top_heading());
