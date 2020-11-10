@@ -58,4 +58,12 @@ fn main() {
                 .display_order(3)
                 .help("Exclude license section"),
         )
+        .arg(
+            Arg::with_name("documentation-exclude")
+                .long("exclude-documentation")
+                .short("d")
+                .multiple(false)
+                .display_order(4)
+                .help("Exclude documentation section"),
+        )
 }
