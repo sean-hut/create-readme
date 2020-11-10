@@ -25,8 +25,6 @@ pub fn create_readme(arguments: ArgMatches) {
 
     let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
-    append(&mut file, overview());
-    append(&mut file, BLANK_LINE);
     match arguments.value_of("top-heading") {
         Some(heading) => {
             append(&mut file, "# ");
@@ -39,6 +37,26 @@ pub fn create_readme(arguments: ArgMatches) {
         }
         None => {
             eprintln!("Text for the top heading must be provided.");
+            exit(1);
+        }
+    }
+
+    match arguments.occurrences_of("overview-exclude") {
+        0 => {
+            append(&mut file, overview());
+            append(&mut file, BLANK_LINE);
+
+            if verbose {
+                println!("Overview section appended")
+            }
+        }
+        1 => {
+            if verbose {
+                println!("Overview section excluded")
+            }
+        }
+        _ => {
+            eprintln!("Only one --disable-overview allowed.");
             exit(1);
         }
     }
