@@ -82,4 +82,12 @@ fn main() {
                 .display_order(6)
                 .help("Exclude development version section"),
         )
+        .arg(
+            Arg::with_name("stable-version-exclude")
+                .long("exclude-stable-version")
+                .short("s")
+                .multiple(false)
+                .display_order(7)
+                .help("Exclude stable version section"),
+        )
 }
