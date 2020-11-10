@@ -160,9 +160,27 @@ pub fn create_readme(arguments: ArgMatches) {
         }
     }
 
+    match arguments.occurrences_of("development-version-exclude") {
+        0 => {
+            append(&mut file, development_version());
+            append(&mut file, BLANK_LINE);
 
-    append(&mut file, development_version());
-    append(&mut file, BLANK_LINE);
+            if verbose {
+                println!("Development version section appended")
+            }
+        }
+        1 => {
+            if verbose {
+                println!("Development version section excluded")
+            }
+        }
+        _ => {
+            eprintln!("Only one --disable-development-version allowed.");
+            exit(1);
+        }
+    }
+
+
 
     append(&mut file, stable_version());
     append(&mut file, BLANK_LINE);
