@@ -98,4 +98,12 @@ fn main() {
                 .display_order(8)
                 .help("Exclude contributing section"),
         )
+        .arg(
+            Arg::with_name("verbose")
+                .long("verbose")
+                .short("v")
+                .multiple(false)
+                .display_order(9)
+                .help("Verbose output"),
+        )
 }
