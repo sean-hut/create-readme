@@ -4,6 +4,8 @@ use std::fs::{File, OpenOptions};
 use std::io::Write;
 use std::process::exit;
 
+use clap::ArgMatches;
+
 use crate::sections::{
     changelog::CHANGELOG,
     contributing::contributing,
