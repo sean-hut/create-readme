@@ -50,4 +50,12 @@ fn main() {
                 .display_order(2)
                 .help("Exclude example use section"),
         )
+        .arg(
+            Arg::with_name("license-exclude")
+                .long("exclude-license")
+                .short("L")
+                .multiple(false)
+                .display_order(3)
+                .help("Exclude license section"),
+        )
 }
