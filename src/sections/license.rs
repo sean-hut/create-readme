@@ -25,3 +25,18 @@ Links for more information on the license:
 [mit0-commentary]: <https://web.archive.org/web/20200920130347/https://romanrm.net/mit-zero>
 [mit0-osi]: <https://web.archive.org/web/20200923194159/https://opensource.org/licenses/MIT-0>";
 
+pub const UNLICENSE: &str =
+    "This project is licensed under the Unlicense license (Unlicense).
+
+Links for more information on the license:
+
+- [Unlicense Commentary][unlicense]
+- [Open Source Initiative: Unlicense][osi-unlicense]
+- [Free Software Foundation: Unlicense][fsf-unlicense]
+- [Choose a license: Unlicense][github-unlicense]
+
+[unlicense]: <https://web.archive.org/web/20201106160853/https://unlicense.org/>
+[osi-unlicense]: <https://web.archive.org/web/20201026162236/https://opensource.org/licenses/unlicense>
+[fsf-unlicense]: <https://web.archive.org/web/20201108145518/http://www.gnu.org/licenses/license-list.html#Unlicense>
+[github-unlicense]: <https://web.archive.org/web/20200905083506/https://choosealicense.com/licenses/unlicense/>";
+
