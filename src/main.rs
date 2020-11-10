@@ -46,7 +46,7 @@ fn main() {
                 .long("exclude-overview")
                 .short("o")
                 .multiple(false)
-                .display_order(1)
+                .display_order(2)
                 .help("Exclude overview section"),
         )
         .arg(
@@ -54,7 +54,7 @@ fn main() {
                 .long("exclude-example-use")
                 .short("e")
                 .multiple(false)
-                .display_order(2)
+                .display_order(3)
                 .help("Exclude example use section"),
         )
         .arg(
@@ -62,7 +62,7 @@ fn main() {
                 .long("exclude-license")
                 .short("L")
                 .multiple(false)
-                .display_order(3)
+                .display_order(4)
                 .help("Exclude license section"),
         )
         .arg(
@@ -70,7 +70,7 @@ fn main() {
                 .long("exclude-documentation")
                 .short("d")
                 .multiple(false)
-                .display_order(4)
+                .display_order(5)
                 .help("Exclude documentation section"),
         )
         .arg(
@@ -78,7 +78,7 @@ fn main() {
                 .long("exclude-changelog")
                 .short("c")
                 .multiple(false)
-                .display_order(5)
+                .display_order(6)
                 .help("Exclude changelog section"),
         )
         .arg(
@@ -86,7 +86,7 @@ fn main() {
                 .long("exclude-development-version")
                 .short("D")
                 .multiple(false)
-                .display_order(6)
+                .display_order(7)
                 .help("Exclude development version section"),
         )
         .arg(
@@ -94,7 +94,7 @@ fn main() {
                 .long("exclude-stable-version")
                 .short("s")
                 .multiple(false)
-                .display_order(7)
+                .display_order(8)
                 .help("Exclude stable version section"),
         )
         .arg(
@@ -102,7 +102,7 @@ fn main() {
                 .long("exclude-contributing")
                 .short("C")
                 .multiple(false)
-                .display_order(8)
+                .display_order(9)
                 .help("Exclude contributing section"),
         )
         .arg(
@@ -110,7 +110,7 @@ fn main() {
                 .long("verbose")
                 .short("v")
                 .multiple(false)
-                .display_order(9)
+                .display_order(10)
                 .help("Verbose output"),
         )
         .get_matches();
