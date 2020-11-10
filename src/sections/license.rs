@@ -1,5 +1,4 @@
-pub fn licence() -> &'static str {
-    "## License
+pub const LICENCE: &str = "## License
 
 The license file is `LICENSE`.
 
