@@ -42,4 +42,12 @@ fn main() {
                 .display_order(1)
                 .help("Exclude overview section"),
         )
+        .arg(
+            Arg::with_name("example-use-exclude")
+                .long("exclude-example-use")
+                .short("e")
+                .multiple(false)
+                .display_order(2)
+                .help("Exclude example use section"),
+        )
 }
