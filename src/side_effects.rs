@@ -22,7 +22,6 @@ const README: &str = "README.md";
 const BLANK_LINE: &str = "\n\n";
 
 pub fn create_readme(arguments: ArgMatches) {
-    let mut file = open_readme();
     let overwrite: bool = arguments.occurrences_of("overwrite") > 0;
 
     let verbose: bool = arguments.occurrences_of("verbose") > 0;
@@ -45,6 +44,8 @@ pub fn create_readme(arguments: ArgMatches) {
         eprintln!("README.md already exists.  If you want to overwrite README.md use the --overwrite flag.");
         exit(1);
     }
+
+    let mut file = open_readme();
 
     match arguments.value_of("top-heading") {
         Some(heading) => {
