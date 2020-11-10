@@ -90,4 +90,12 @@ fn main() {
                 .display_order(7)
                 .help("Exclude stable version section"),
         )
+        .arg(
+            Arg::with_name("contributing-exclude")
+                .long("exclude-contributing")
+                .short("C")
+                .multiple(false)
+                .display_order(8)
+                .help("Exclude contributing section"),
+        )
 }
