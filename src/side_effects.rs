@@ -11,7 +11,7 @@ use crate::sections::{
     contributing::contributing,
     documentation::documentation,
     example_use::example_use,
-    license::licence,
+    license::{BSD0, CC0, LICENCE, MIT0, UNLICENSE},
     overview::overview,
     versions::{development_version, stable_version},
 };
