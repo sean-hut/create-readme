@@ -34,4 +34,12 @@ fn main() {
                 .display_order(2)
                 .help("Select a LICENSE"),
         )
+        .arg(
+            Arg::with_name("overview-exclude")
+                .long("exclude-overview")
+                .short("o")
+                .multiple(false)
+                .display_order(1)
+                .help("Exclude overview section"),
+        )
 }
