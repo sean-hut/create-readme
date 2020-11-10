@@ -66,4 +66,12 @@ fn main() {
                 .display_order(4)
                 .help("Exclude documentation section"),
         )
+        .arg(
+            Arg::with_name("changelog-exclude")
+                .long("exclude-changelog")
+                .short("c")
+                .multiple(false)
+                .display_order(5)
+                .help("Exclude changelog section"),
+        )
 }
