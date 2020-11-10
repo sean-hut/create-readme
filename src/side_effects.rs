@@ -59,7 +59,6 @@ fn open_readme() -> File {
 }
 
 fn append(file: &mut File, text: &str) {
-    // match writeln!(file, "{}", text) {
     match write!(file, "{}", text) {
         Ok(_) => (),
         Err(_) => {
