@@ -106,4 +106,6 @@ fn main() {
                 .display_order(9)
                 .help("Verbose output"),
         )
+        .get_matches();
+
 }
