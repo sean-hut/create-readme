@@ -1,7 +1,8 @@
 mod sections;
 
-use std::fs::{File, OpenOptions};
+use std::fs::{remove_file, File, OpenOptions};
 use std::io::Write;
+use std::path::Path;
 use std::process::exit;
 
 use clap::ArgMatches;
@@ -22,8 +23,28 @@ const BLANK_LINE: &str = "\n\n";
 
 pub fn create_readme(arguments: ArgMatches) {
     let mut file = open_readme();
+    let overwrite: bool = arguments.occurrences_of("overwrite") > 0;
 
     let verbose: bool = arguments.occurrences_of("verbose") > 0;
+
+    if overwrite {
+        match remove_file(README) {
+            Ok(_) => {
+                if verbose {
+                    println!("Overwriting README.md")
+                }
+            }
+            Err(e) => {
+                eprintln!("Could not overwrite README.md: {}", e);
+                exit(1);
+            }
+        }
+    }
+
+    if !overwrite && Path::new(README).exists() {
+        eprintln!("README.md already exists.  If you want to overwrite README.md use the --overwrite flag.");
+        exit(1);
+    }
 
     match arguments.value_of("top-heading") {
         Some(heading) => {
