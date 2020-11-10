@@ -11,7 +11,6 @@ use crate::sections::{
     example_use::example_use,
     license::licence,
     overview::overview,
-    top_heading::top_heading,
     versions::{development_version, stable_version},
 };
 
