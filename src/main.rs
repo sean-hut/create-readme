@@ -74,4 +74,12 @@ fn main() {
                 .display_order(5)
                 .help("Exclude changelog section"),
         )
+        .arg(
+            Arg::with_name("development-version-exclude")
+                .long("exclude-development-version")
+                .short("D")
+                .multiple(false)
+                .display_order(6)
+                .help("Exclude development version section"),
+        )
 }
