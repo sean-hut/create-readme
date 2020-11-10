@@ -219,6 +219,9 @@ pub fn create_readme(arguments: ArgMatches) {
         }
     }
 
+    if verbose {
+        println!("README.md created")
+    }
 }
 
 fn open_readme() -> File {
