@@ -49,6 +49,27 @@ pub fn create_readme(arguments: ArgMatches) {
     succes_message(&arguments);
 }
 
+fn open_readme() -> File {
+    match OpenOptions::new().append(true).create(true).open(README) {
+        Ok(file) => file,
+        Err(e) => {
+            eprintln!("Error opening {}: {}", README, e);
+            exit(1);
+        }
+    }
+}
+
+fn append(file: &mut File, text: &str) {
+    match write!(file, "{}", text) {
+        Ok(_) => (),
+        Err(_) => {
+            eprintln!("Error writing to file");
+            exit(1);
+        }
+    }
+}
+
+fn overwrite_checks(arguments: &ArgMatches) {
     let overwrite: bool = arguments.occurrences_of("overwrite") > 0;
 
     let verbose: bool = arguments.occurrences_of("verbose") > 0;
@@ -153,25 +174,5 @@ fn succes_message(arguments: &ArgMatches) {
 
     if verbose {
         println!("README.md created")
-    }
-}
-
-fn open_readme() -> File {
-    match OpenOptions::new().append(true).create(true).open(README) {
-        Ok(file) => file,
-        Err(e) => {
-            eprintln!("Error opening {}: {}", README, e);
-            exit(1);
-        }
-    }
-}
-
-fn append(file: &mut File, text: &str) {
-    match write!(file, "{}", text) {
-        Ok(_) => (),
-        Err(_) => {
-            eprintln!("Error writing to file");
-            exit(1);
-        }
     }
 }
