@@ -8,7 +8,7 @@ use std::process::exit;
 use clap::ArgMatches;
 
 use crate::sections::{
-    changelog::CHANGELOG,
+    changelog::changelog,
     contributing::contributing,
     documentation::documentation,
     example_use::example_use,
