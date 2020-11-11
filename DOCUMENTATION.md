@@ -20,7 +20,7 @@
 
     `cargo build --release`.
 
-6. Copy the binary into the git hook directory of the repository.
+6. Copy the binary into cargo's bin directory.
 
     Copy
     `create-readme/target/release/create-readme`
