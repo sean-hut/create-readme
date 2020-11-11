@@ -47,22 +47,6 @@ pub fn create_readme(arguments: ArgMatches) {
 
     let mut file = open_readme();
 
-    match arguments.value_of("top-heading") {
-        Some(heading) => {
-            append(&mut file, "# ");
-            append(&mut file, heading);
-            append(&mut file, BLANK_LINE);
-
-            if verbose {
-                println!("Top heading appended")
-            }
-        }
-        None => {
-            eprintln!("Text for the top heading must be provided.");
-            exit(1);
-        }
-    }
-
     match arguments.occurrences_of("overview-exclude") {
         0 => {
             append(&mut file, overview());
@@ -102,6 +86,8 @@ pub fn create_readme(arguments: ArgMatches) {
             exit(1);
         }
     }
+fn top_heading(arguments: &ArgMatches) {
+    let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
     match arguments.occurrences_of("license-exclude") {
         0 => {
@@ -141,14 +127,20 @@ pub fn create_readme(arguments: ArgMatches) {
             exit(1);
         }
     }
+    let mut file = open_readme();
 
     match arguments.occurrences_of("documentation-exclude") {
         0 => {
             append(&mut file, documentation());
+    match arguments.value_of("top-heading") {
+        Some(heading) => {
+            append(&mut file, "# ");
+            append(&mut file, heading);
             append(&mut file, BLANK_LINE);
 
             if verbose {
                 println!("Documentation section appended")
+                println!("Top heading appended")
             }
         }
         1 => {
@@ -158,9 +150,12 @@ pub fn create_readme(arguments: ArgMatches) {
         }
         _ => {
             eprintln!("Only one --disable-documentation allowed.");
+        None => {
+            eprintln!("Text for the top heading must be provided.  Use the option --top-heading");
             exit(1);
         }
     }
+}
 
     match arguments.occurrences_of("changelog-exclude") {
         0 => {
