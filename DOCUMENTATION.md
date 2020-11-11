@@ -36,17 +36,15 @@ This project has no runtime dependencies.
 
 ## Use
 
-Create a readme for your project.
+1. Create a readme for your project.
 
     1. Navigate to the root directory of your project.
-	2. Run `create-readme`.
+	1. Read the help message by running `create-readme --help`
+	1. Run `create-readme` with your desired combination of flags and options.
 
-Customize the readme.
-
-    1. Change `# TODO Top Heading`
-	2. Change `TODO Overview section.`
+2. Customize the readme's `TODO Overview section.`.
 
 ## README.md content
 
-This project's readme was created with `create-readme`.  Then the top
-heading and overview section were customized.
+To see examples of readme files created by `create-readme` and then
+customized refer to `example-use.md`.
