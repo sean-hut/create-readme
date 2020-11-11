@@ -44,23 +44,33 @@ pub fn create_readme(arguments: ArgMatches) {
         eprintln!("README.md already exists.  If you want to overwrite README.md use the --overwrite flag.");
         exit(1);
     }
+}
+
+fn section(arguments: &ArgMatches, section: Section, function: &dyn Fn() -> &'static str) {
+    let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
     let mut file = open_readme();
 
+    match arguments.occurrences_of(section.flag) {
         0 => {
+            append(&mut file, function());
             append(&mut file, BLANK_LINE);
 
             if verbose {
+                println!("{}", section.append_message)
             }
         }
         1 => {
             if verbose {
+                println!("{}", section.exclude_message)
             }
         }
         _ => {
+            eprintln!("{}", section.error_message);
             exit(1);
         }
     }
+}
 
 fn top_heading(arguments: &ArgMatches) {
     let verbose: bool = arguments.occurrences_of("verbose") > 0;
