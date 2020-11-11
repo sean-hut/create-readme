@@ -14,6 +14,10 @@ use crate::sections::{
     example_use::example_use,
     license::license,
     overview::overview,
+    section_structs::{
+        Section, CHANGELOG, CONTRIBUTING, DEVELOPMENT_VERSION, DOCUMENTATION, EXAMPLE_USE, LICENSE,
+        OVERVIEW, STABLE_VERSION,
+    },
     versions::{development_version, stable_version},
 };
 
