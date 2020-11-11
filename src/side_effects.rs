@@ -26,6 +26,29 @@ const README: &str = "README.md";
 const BLANK_LINE: &str = "\n\n";
 
 pub fn create_readme(arguments: ArgMatches) {
+    overwrite_checks(&arguments);
+
+    top_heading(&arguments);
+
+    section(&arguments, OVERVIEW, &overview);
+
+    section(&arguments, EXAMPLE_USE, &example_use);
+
+    licence_section(&arguments, LICENSE);
+
+    section(&arguments, DOCUMENTATION, &documentation);
+
+    section(&arguments, CHANGELOG, &changelog);
+
+    section(&arguments, DEVELOPMENT_VERSION, &development_version);
+
+    section(&arguments, STABLE_VERSION, &stable_version);
+
+    section(&arguments, CONTRIBUTING, &contributing);
+
+    succes_message(&arguments);
+}
+
     let overwrite: bool = arguments.occurrences_of("overwrite") > 0;
 
     let verbose: bool = arguments.occurrences_of("verbose") > 0;
