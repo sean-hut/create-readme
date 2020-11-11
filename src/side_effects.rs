@@ -8,12 +8,16 @@ use std::process::exit;
 use clap::ArgMatches;
 
 use crate::sections::{
-    changelog::CHANGELOG,
+    changelog::changelog,
     contributing::contributing,
     documentation::documentation,
     example_use::example_use,
-    license::{BSD0, CC0, LICENCE, MIT0, UNLICENSE},
+    license::license,
     overview::overview,
+    section_structs::{
+        Section, CHANGELOG, CONTRIBUTING, DEVELOPMENT_VERSION, DOCUMENTATION, EXAMPLE_USE, LICENSE,
+        OVERVIEW, STABLE_VERSION,
+    },
     versions::{development_version, stable_version},
 };
 
@@ -22,6 +26,50 @@ const README: &str = "README.md";
 const BLANK_LINE: &str = "\n\n";
 
 pub fn create_readme(arguments: ArgMatches) {
+    overwrite_checks(&arguments);
+
+    top_heading(&arguments);
+
+    section(&arguments, OVERVIEW, &overview);
+
+    section(&arguments, EXAMPLE_USE, &example_use);
+
+    licence_section(&arguments, LICENSE);
+
+    section(&arguments, DOCUMENTATION, &documentation);
+
+    section(&arguments, CHANGELOG, &changelog);
+
+    section(&arguments, DEVELOPMENT_VERSION, &development_version);
+
+    section(&arguments, STABLE_VERSION, &stable_version);
+
+    section(&arguments, CONTRIBUTING, &contributing);
+
+    succes_message(&arguments);
+}
+
+fn open_readme() -> File {
+    match OpenOptions::new().append(true).create(true).open(README) {
+        Ok(file) => file,
+        Err(e) => {
+            eprintln!("Error opening {}: {}", README, e);
+            exit(1);
+        }
+    }
+}
+
+fn append(file: &mut File, text: &str) {
+    match write!(file, "{}", text) {
+        Ok(_) => (),
+        Err(_) => {
+            eprintln!("Error writing to file");
+            exit(1);
+        }
+    }
+}
+
+fn overwrite_checks(arguments: &ArgMatches) {
     let overwrite: bool = arguments.occurrences_of("overwrite") > 0;
 
     let verbose: bool = arguments.occurrences_of("verbose") > 0;
@@ -44,6 +92,36 @@ pub fn create_readme(arguments: ArgMatches) {
         eprintln!("README.md already exists.  If you want to overwrite README.md use the --overwrite flag.");
         exit(1);
     }
+}
+
+fn section(arguments: &ArgMatches, section: Section, function: &dyn Fn() -> &'static str) {
+    let verbose: bool = arguments.occurrences_of("verbose") > 0;
+
+    let mut file = open_readme();
+
+    match arguments.occurrences_of(section.flag) {
+        0 => {
+            append(&mut file, function());
+            append(&mut file, BLANK_LINE);
+
+            if verbose {
+                println!("{}", section.append_message)
+            }
+        }
+        1 => {
+            if verbose {
+                println!("{}", section.exclude_message)
+            }
+        }
+        _ => {
+            eprintln!("{}", section.error_message);
+            exit(1);
+        }
+    }
+}
+
+fn top_heading(arguments: &ArgMatches) {
+    let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
     let mut file = open_readme();
 
@@ -58,210 +136,43 @@ pub fn create_readme(arguments: ArgMatches) {
             }
         }
         None => {
-            eprintln!("Text for the top heading must be provided.");
+            eprintln!("Text for the top heading must be provided.  Use the option --top-heading");
             exit(1);
         }
     }
+}
 
-    match arguments.occurrences_of("overview-exclude") {
+fn licence_section(arguments: &ArgMatches, section: Section) {
+    let verbose: bool = arguments.occurrences_of("verbose") > 0;
+
+    let mut file = open_readme();
+
+    match arguments.occurrences_of(section.flag) {
         0 => {
-            append(&mut file, overview());
+            append(&mut file, &license(&arguments)[..]);
             append(&mut file, BLANK_LINE);
 
             if verbose {
-                println!("Overview section appended")
+                println!("{}", section.append_message)
             }
         }
         1 => {
             if verbose {
-                println!("Overview section excluded")
-            }
-        }
-        _ => {
-            eprintln!("Only one --disable-overview allowed.");
-            exit(1);
-        }
-    }
-
-    match arguments.occurrences_of("example-use-exclude") {
-        0 => {
-            append(&mut file, example_use());
-            append(&mut file, BLANK_LINE);
-
-            if verbose {
-                println!("Example use section appended")
-            }
-        }
-        1 => {
-            if verbose {
-                println!("Example use section excluded")
-            }
-        }
-        _ => {
-            eprintln!("Only one --disable-example-use allowed.");
-            exit(1);
-        }
-    }
-
-    match arguments.occurrences_of("license-exclude") {
-        0 => {
-            append(&mut file, LICENCE);
-
-            match arguments.value_of("license") {
-                Some(heading) => match heading {
-                    "0bsd" => append(&mut file, BSD0),
-                    "mit0" => append(&mut file, MIT0),
-                    "unlicense" => append(&mut file, UNLICENSE),
-                    "cc0" => append(&mut file, CC0),
-                    _ => {
-                        eprintln!("Invalid license");
-                        exit(1);
-                    }
-                },
-                None => {
-                    eprintln!("Must provide licence");
-                    exit(1);
-                }
-            }
-
-            append(&mut file, BLANK_LINE);
-
-            if verbose {
-                println!("Licence section appended")
-            }
-        }
-        1 => {
-            if verbose {
-                println!("License section excluded")
+                println!("{}", section.exclude_message)
             }
         }
 
         _ => {
-            eprintln!("Only one --disable-licence allowed.");
+            eprintln!("{}", section.error_message);
             exit(1);
         }
     }
+}
 
-    match arguments.occurrences_of("documentation-exclude") {
-        0 => {
-            append(&mut file, documentation());
-            append(&mut file, BLANK_LINE);
-
-            if verbose {
-                println!("Documentation section appended")
-            }
-        }
-        1 => {
-            if verbose {
-                println!("Documentation section excluded")
-            }
-        }
-        _ => {
-            eprintln!("Only one --disable-documentation allowed.");
-            exit(1);
-        }
-    }
-
-    match arguments.occurrences_of("changelog-exclude") {
-        0 => {
-            append(&mut file, CHANGELOG);
-            append(&mut file, BLANK_LINE);
-
-            if verbose {
-                println!("Changelog section appended")
-            }
-        }
-        1 => {
-            if verbose {
-                println!("Changelog section excluded")
-            }
-        }
-        _ => {
-            eprintln!("Only one --disable-changelog allowed.");
-            exit(1);
-        }
-    }
-
-    match arguments.occurrences_of("development-version-exclude") {
-        0 => {
-            append(&mut file, development_version());
-            append(&mut file, BLANK_LINE);
-
-            if verbose {
-                println!("Development version section appended")
-            }
-        }
-        1 => {
-            if verbose {
-                println!("Development version section excluded")
-            }
-        }
-        _ => {
-            eprintln!("Only one --disable-development-version allowed.");
-            exit(1);
-        }
-    }
-
-    match arguments.occurrences_of("stable-version-exclude") {
-        0 => {
-            append(&mut file, stable_version());
-            append(&mut file, BLANK_LINE);
-
-            if verbose {
-                println!("Stable version section appended")
-            }
-        }
-        1 => {
-            if verbose {
-                println!("Stable version section excluded")
-            }
-        }
-        _ => {
-            eprintln!("Only one --disable-stable-version allowed.");
-            exit(1);
-        }
-    }
-
-    match arguments.occurrences_of("contributing-exclude") {
-        0 => {
-            append(&mut file, contributing());
-
-            if verbose {
-                println!("Contributing section appended")
-            }
-        }
-        1 => {
-            if verbose {
-                println!("Contributing section excluded")
-            }
-        }
-        _ => {
-            eprintln!("Only one --disable-contributing allowed.");
-            exit(1);
-        }
-    }
+fn succes_message(arguments: &ArgMatches) {
+    let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
     if verbose {
         println!("README.md created")
-    }
-}
-
-fn open_readme() -> File {
-    match OpenOptions::new().append(true).create(true).open(README) {
-        Ok(file) => file,
-        Err(e) => {
-            eprintln!("Error opening {}: {}", README, e);
-            exit(1);
-        }
-    }
-}
-
-fn append(file: &mut File, text: &str) {
-    match write!(file, "{}", text) {
-        Ok(_) => (),
-        Err(_) => {
-            eprintln!("Error writing to file");
-            exit(1);
-        }
     }
 }
