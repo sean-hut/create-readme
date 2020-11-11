@@ -89,44 +89,6 @@ pub fn create_readme(arguments: ArgMatches) {
 fn top_heading(arguments: &ArgMatches) {
     let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
-    match arguments.occurrences_of("license-exclude") {
-        0 => {
-            append(&mut file, LICENCE);
-
-            match arguments.value_of("license") {
-                Some(heading) => match heading {
-                    "0bsd" => append(&mut file, BSD0),
-                    "mit0" => append(&mut file, MIT0),
-                    "unlicense" => append(&mut file, UNLICENSE),
-                    "cc0" => append(&mut file, CC0),
-                    _ => {
-                        eprintln!("Invalid license");
-                        exit(1);
-                    }
-                },
-                None => {
-                    eprintln!("Must provide licence");
-                    exit(1);
-                }
-            }
-
-            append(&mut file, BLANK_LINE);
-
-            if verbose {
-                println!("Licence section appended")
-            }
-        }
-        1 => {
-            if verbose {
-                println!("License section excluded")
-            }
-        }
-
-        _ => {
-            eprintln!("Only one --disable-licence allowed.");
-            exit(1);
-        }
-    }
     let mut file = open_readme();
 
     match arguments.occurrences_of("documentation-exclude") {
@@ -161,6 +123,8 @@ fn top_heading(arguments: &ArgMatches) {
         0 => {
             append(&mut file, CHANGELOG);
             append(&mut file, BLANK_LINE);
+fn licence_section(arguments: &ArgMatches, section: Section) {
+    let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
             if verbose {
                 println!("Changelog section appended")
@@ -176,19 +140,24 @@ fn top_heading(arguments: &ArgMatches) {
             exit(1);
         }
     }
+    let mut file = open_readme();
 
     match arguments.occurrences_of("development-version-exclude") {
+    match arguments.occurrences_of(section.flag) {
         0 => {
             append(&mut file, development_version());
+            append(&mut file, &license(&arguments)[..]);
             append(&mut file, BLANK_LINE);
 
             if verbose {
                 println!("Development version section appended")
+                println!("{}", section.append_message)
             }
         }
         1 => {
             if verbose {
                 println!("Development version section excluded")
+                println!("{}", section.exclude_message)
             }
         }
         _ => {
@@ -213,9 +182,11 @@ fn top_heading(arguments: &ArgMatches) {
         }
         _ => {
             eprintln!("Only one --disable-stable-version allowed.");
+            eprintln!("{}", section.error_message);
             exit(1);
         }
     }
+}
 
     match arguments.occurrences_of("contributing-exclude") {
         0 => {
