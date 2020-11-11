@@ -121,6 +121,8 @@ fn licence_section(arguments: &ArgMatches, section: Section) {
     }
 }
 
+fn succes_message(arguments: &ArgMatches) {
+    let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
     if verbose {
         println!("README.md created")
