@@ -1,8 +1,6 @@
 mod sections;
 mod side_effects;
 
-use std::fs::remove_file;
-use std::path::Path;
 use std::process::exit;
 
 use clap::ArgMatches;
@@ -20,9 +18,10 @@ use crate::sections::{
     },
     versions::{development_version, stable_version},
 };
-use crate::side_effects::append::{append, open};
-
-const README: &str = "README.md";
+use crate::side_effects::{
+    append::{append, open},
+    checks::overwrite_checks,
+};
 
 const BLANK_LINE: &str = "\n\n";
 
@@ -48,32 +47,6 @@ pub fn create_readme(arguments: ArgMatches) {
     section(&arguments, CONTRIBUTING, &contributing);
 
     succes_message(&arguments);
-}
-
-fn overwrite_checks(arguments: &ArgMatches) {
-    let overwrite: bool = arguments.is_present("overwrite");
-
-    if overwrite {
-        match remove_file(README) {
-            Ok(_) => {
-                if arguments.is_present("verbose") {
-                    println!("[Info] Overwriting README.md")
-                }
-            }
-            Err(e) => {
-                eprintln!("[Error] Could not overwrite README.md: {}", e);
-                exit(1);
-            }
-        }
-    }
-
-    if !overwrite && Path::new(README).exists() {
-        eprintln!(
-            "[Error] README.md already exists. \
-             If you want to overwrite README.md use the --overwrite flag."
-        );
-        exit(1);
-    }
 }
 
 fn section(arguments: &ArgMatches, section: Section, function: &dyn Fn() -> &'static str) {
