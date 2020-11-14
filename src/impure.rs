@@ -21,6 +21,7 @@ use crate::sections::{
 use crate::side_effects::{
     append::{append, open},
     checks::overwrite_checks,
+    output::succes_message,
 };
 
 const BLANK_LINE: &str = "\n\n";
@@ -109,11 +110,5 @@ fn licence_section(arguments: &ArgMatches, section: Section) {
         if verbose {
             println!("{}", section.append_message)
         }
-    }
-}
-
-fn succes_message(arguments: &ArgMatches) {
-    if arguments.is_present("verbose") {
-        println!("[Success] README.md created")
     }
 }
