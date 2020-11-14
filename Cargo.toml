@@ -5,8 +5,8 @@ authors = ["Sean Hutchings <seanhut@yandex.com>"]
 edition = "2018"
 
 [lib]
-name = "side_effects"
-path = "src/side_effects.rs"
+name = "impure"
+path = "src/impure.rs"
 
 [dependencies]
 clap = "~2.33"
