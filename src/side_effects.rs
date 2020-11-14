@@ -53,7 +53,7 @@ fn open_readme() -> File {
     match OpenOptions::new().append(true).create(true).open(README) {
         Ok(file) => file,
         Err(e) => {
-            eprintln!("Error opening {}: {}", README, e);
+            eprintln!("[Error] Could not open {}: {}", README, e);
             exit(1);
         }
     }
@@ -62,8 +62,8 @@ fn open_readme() -> File {
 fn append(file: &mut File, text: &str) {
     match write!(file, "{}", text) {
         Ok(_) => (),
-        Err(_) => {
-            eprintln!("Error writing to file");
+        Err(e) => {
+            eprintln!("[Error] Could not write to file. {}", e);
             exit(1);
         }
     }
@@ -78,18 +78,21 @@ fn overwrite_checks(arguments: &ArgMatches) {
         match remove_file(README) {
             Ok(_) => {
                 if verbose {
-                    println!("Overwriting README.md")
+                    println!("[Info] Overwriting README.md")
                 }
             }
             Err(e) => {
-                eprintln!("Could not overwrite README.md: {}", e);
+                eprintln!("[Error] Could not overwrite README.md: {}", e);
                 exit(1);
             }
         }
     }
 
     if !overwrite && Path::new(README).exists() {
-        eprintln!("README.md already exists.  If you want to overwrite README.md use the --overwrite flag.");
+        eprintln!(
+            "[Error] README.md already exists. \
+             If you want to overwrite README.md use the --overwrite flag."
+        );
         exit(1);
     }
 }
@@ -132,11 +135,14 @@ fn top_heading(arguments: &ArgMatches) {
             append(&mut file, BLANK_LINE);
 
             if verbose {
-                println!("Top heading appended")
+                println!("[Info] Top heading appended")
             }
         }
         None => {
-            eprintln!("Text for the top heading must be provided.  Use the option --top-heading");
+            eprintln!(
+                "[Error] Text for the top heading must be provided. \
+                 Use the option --top-heading"
+            );
             exit(1);
         }
     }
@@ -173,6 +179,6 @@ fn succes_message(arguments: &ArgMatches) {
     let verbose: bool = arguments.occurrences_of("verbose") > 0;
 
     if verbose {
-        println!("README.md created")
+        println!("[Success] README.md created")
     }
 }
