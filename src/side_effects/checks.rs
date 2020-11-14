@@ -4,7 +4,7 @@ use std::process::exit;
 
 use clap::ArgMatches;
 
-const README: &str = "README.md";
+use crate::side_effects::contstants::README;
 
 pub fn overwrite_checks(arguments: &ArgMatches) {
     let overwrite: bool = arguments.is_present("overwrite");

@@ -2,7 +2,7 @@ use std::fs::{File, OpenOptions};
 use std::io::Write;
 use std::process::exit;
 
-const README: &str = "README.md";
+use crate::side_effects::contstants::README;
 
 pub fn open() -> File {
     match OpenOptions::new().append(true).create(true).open(README) {
