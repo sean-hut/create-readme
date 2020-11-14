@@ -1,7 +1,7 @@
 use crate::sections::section_structs::Section;
 
 pub const CHANGELOG: Section = Section {
-    flag: "changelog-exclude",
+    flag: "exclude-changelog",
     append_message: "[Info] Changelog section appended",
     exclude_message: "[Info] Changelog section excluded",
     content: "## Changelog\n\

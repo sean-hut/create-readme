@@ -1,7 +1,7 @@
 use crate::sections::section_structs::Section;
 
 pub const DEVELOPMENT_VERSION: Section = Section {
-    flag: "development-version-exclude",
+    flag: "exclude-development-version",
     append_message: "[Info] Development version section appended",
     exclude_message: "[Info] Development version section excluded",
     content: "## Development Version\n\
@@ -11,7 +11,7 @@ pub const DEVELOPMENT_VERSION: Section = Section {
 };
 
 pub const STABLE_VERSION: Section = Section {
-    flag: "stable-version-exclude",
+    flag: "exclude-stable-version",
     append_message: "[Info] Stable version section appended",
     exclude_message: "[Info] Stable version section excluded",
     content: "## Stable Versions\n\

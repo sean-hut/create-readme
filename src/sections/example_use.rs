@@ -1,7 +1,7 @@
 use crate::sections::section_structs::Section;
 
 pub const EXAMPLE_USE: Section = Section {
-    flag: "example-use-exclude",
+    flag: "exclude-example-use",
     append_message: "[Info] Example use section appended",
     exclude_message: "[Info] Example use section excluded",
     content: "## Example Use\n\

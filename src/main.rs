@@ -42,7 +42,7 @@ fn main() {
                 .help("Overwrite README.md"),
         )
         .arg(
-            Arg::with_name("overview-exclude")
+            Arg::with_name("exclude-overview")
                 .long("exclude-overview")
                 .short("o")
                 .multiple(false)
@@ -50,7 +50,7 @@ fn main() {
                 .help("Exclude overview section"),
         )
         .arg(
-            Arg::with_name("example-use-exclude")
+            Arg::with_name("exclude-example-use")
                 .long("exclude-example-use")
                 .short("e")
                 .multiple(false)
@@ -58,7 +58,7 @@ fn main() {
                 .help("Exclude example use section"),
         )
         .arg(
-            Arg::with_name("license-exclude")
+            Arg::with_name("exclude-license")
                 .long("exclude-license")
                 .short("L")
                 .multiple(false)
@@ -66,7 +66,7 @@ fn main() {
                 .help("Exclude license section"),
         )
         .arg(
-            Arg::with_name("documentation-exclude")
+            Arg::with_name("exclude-documentation")
                 .long("exclude-documentation")
                 .short("d")
                 .multiple(false)
@@ -74,7 +74,7 @@ fn main() {
                 .help("Exclude documentation section"),
         )
         .arg(
-            Arg::with_name("changelog-exclude")
+            Arg::with_name("exclude-changelog")
                 .long("exclude-changelog")
                 .short("c")
                 .multiple(false)
@@ -82,7 +82,7 @@ fn main() {
                 .help("Exclude changelog section"),
         )
         .arg(
-            Arg::with_name("development-version-exclude")
+            Arg::with_name("exclude-development-version")
                 .long("exclude-development-version")
                 .short("D")
                 .multiple(false)
@@ -90,7 +90,7 @@ fn main() {
                 .help("Exclude development version section"),
         )
         .arg(
-            Arg::with_name("stable-version-exclude")
+            Arg::with_name("exclude-stable-version")
                 .long("exclude-stable-version")
                 .short("s")
                 .multiple(false)
@@ -98,7 +98,7 @@ fn main() {
                 .help("Exclude stable version section"),
         )
         .arg(
-            Arg::with_name("contributing-exclude")
+            Arg::with_name("exclude-contributing")
                 .long("exclude-contributing")
                 .short("C")
                 .multiple(false)
