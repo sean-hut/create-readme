@@ -1,6 +1,6 @@
 use clap::{App, Arg};
 
-use side_effects::create_readme;
+use impure::create_readme;
 
 fn main() {
     let arguments = App::new("create-readme")
