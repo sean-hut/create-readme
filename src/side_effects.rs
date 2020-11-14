@@ -49,7 +49,7 @@ pub fn create_readme(arguments: ArgMatches) {
     succes_message(&arguments);
 }
 
-fn open_readme() -> File {
+fn open() -> File {
     match OpenOptions::new().append(true).create(true).open(README) {
         Ok(file) => file,
         Err(e) => {
@@ -98,7 +98,7 @@ fn overwrite_checks(arguments: &ArgMatches) {
 fn section(arguments: &ArgMatches, section: Section, function: &dyn Fn() -> &'static str) {
     let verbose: bool = arguments.is_present("verbose");
 
-    let mut file = open_readme();
+    let mut file = open();
 
     if arguments.is_present(section.flag) {
         if verbose {
@@ -117,7 +117,7 @@ fn section(arguments: &ArgMatches, section: Section, function: &dyn Fn() -> &'st
 fn top_heading(arguments: &ArgMatches) {
     let verbose: bool = arguments.is_present("verbose");
 
-    let mut file = open_readme();
+    let mut file = open();
 
     match arguments.value_of("top-heading") {
         Some(heading) => {
@@ -142,7 +142,7 @@ fn top_heading(arguments: &ArgMatches) {
 fn licence_section(arguments: &ArgMatches, section: Section) {
     let verbose: bool = arguments.is_present("verbose");
 
-    let mut file = open_readme();
+    let mut file = open();
 
     if arguments.is_present(section.flag) {
         if verbose {
