@@ -70,14 +70,12 @@ fn append(file: &mut File, text: &str) {
 }
 
 fn overwrite_checks(arguments: &ArgMatches) {
-    let overwrite: bool = arguments.occurrences_of("overwrite") > 0;
-
-    let verbose: bool = arguments.occurrences_of("verbose") > 0;
+    let overwrite: bool = arguments.is_present("overwrite");
 
     if overwrite {
         match remove_file(README) {
             Ok(_) => {
-                if verbose {
+                if arguments.is_present("verbose") {
                     println!("[Info] Overwriting README.md")
                 }
             }
@@ -98,33 +96,26 @@ fn overwrite_checks(arguments: &ArgMatches) {
 }
 
 fn section(arguments: &ArgMatches, section: Section, function: &dyn Fn() -> &'static str) {
-    let verbose: bool = arguments.occurrences_of("verbose") > 0;
+    let verbose: bool = arguments.is_present("verbose");
 
     let mut file = open_readme();
 
-    match arguments.occurrences_of(section.flag) {
-        0 => {
-            append(&mut file, function());
-            append(&mut file, BLANK_LINE);
+    if arguments.is_present(section.flag) {
+        if verbose {
+            println!("{}", section.exclude_message)
+        }
+    } else {
+        append(&mut file, function());
+        append(&mut file, BLANK_LINE);
 
-            if verbose {
-                println!("{}", section.append_message)
-            }
-        }
-        1 => {
-            if verbose {
-                println!("{}", section.exclude_message)
-            }
-        }
-        _ => {
-            eprintln!("{}", section.error_message);
-            exit(1);
+        if verbose {
+            println!("{}", section.append_message)
         }
     }
 }
 
 fn top_heading(arguments: &ArgMatches) {
-    let verbose: bool = arguments.occurrences_of("verbose") > 0;
+    let verbose: bool = arguments.is_present("verbose");
 
     let mut file = open_readme();
 
@@ -149,36 +140,26 @@ fn top_heading(arguments: &ArgMatches) {
 }
 
 fn licence_section(arguments: &ArgMatches, section: Section) {
-    let verbose: bool = arguments.occurrences_of("verbose") > 0;
+    let verbose: bool = arguments.is_present("verbose");
 
     let mut file = open_readme();
 
-    match arguments.occurrences_of(section.flag) {
-        0 => {
-            append(&mut file, &license(&arguments)[..]);
-            append(&mut file, BLANK_LINE);
-
-            if verbose {
-                println!("{}", section.append_message)
-            }
+    if arguments.is_present(section.flag) {
+        if verbose {
+            println!("{}", section.exclude_message)
         }
-        1 => {
-            if verbose {
-                println!("{}", section.exclude_message)
-            }
-        }
+    } else {
+        append(&mut file, &license(&arguments)[..]);
+        append(&mut file, BLANK_LINE);
 
-        _ => {
-            eprintln!("{}", section.error_message);
-            exit(1);
+        if verbose {
+            println!("{}", section.append_message)
         }
     }
 }
 
 fn succes_message(arguments: &ArgMatches) {
-    let verbose: bool = arguments.occurrences_of("verbose") > 0;
-
-    if verbose {
+    if arguments.is_present("verbose") {
         println!("[Success] README.md created")
     }
 }
