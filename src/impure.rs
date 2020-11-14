@@ -12,8 +12,10 @@ use crate::sections::{
     overview::OVERVIEW,
     versions::{DEVELOPMENT_VERSION, STABLE_VERSION},
 };
+
 use crate::side_effects::{
-    checks::overwrite_checks, output::succes_message, section::section, top_heading::top_heading,
+    checks::overwrite_checks, license::licence_section, output::succes_message, section::section,
+    top_heading::top_heading,
 };
 
 pub fn create_readme(arguments: ArgMatches) {
@@ -25,6 +27,7 @@ pub fn create_readme(arguments: ArgMatches) {
 
     section(&arguments, EXAMPLE_USE);
 
+    licence_section(&arguments);
 
     section(&arguments, DOCUMENTATION);
 
@@ -38,7 +41,3 @@ pub fn create_readme(arguments: ArgMatches) {
 
     succes_message(&arguments);
 }
-
-
-
-
