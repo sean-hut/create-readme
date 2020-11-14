@@ -1,7 +1,7 @@
 mod sections;
+mod side_effects;
 
-use std::fs::{remove_file, File, OpenOptions};
-use std::io::Write;
+use std::fs::remove_file;
 use std::path::Path;
 use std::process::exit;
 
@@ -20,6 +20,7 @@ use crate::sections::{
     },
     versions::{development_version, stable_version},
 };
+use crate::side_effects::append::{append, open};
 
 const README: &str = "README.md";
 
@@ -47,26 +48,6 @@ pub fn create_readme(arguments: ArgMatches) {
     section(&arguments, CONTRIBUTING, &contributing);
 
     succes_message(&arguments);
-}
-
-fn open() -> File {
-    match OpenOptions::new().append(true).create(true).open(README) {
-        Ok(file) => file,
-        Err(e) => {
-            eprintln!("[Error] Could not open {}: {}", README, e);
-            exit(1);
-        }
-    }
-}
-
-fn append(file: &mut File, text: &str) {
-    match write!(file, "{}", text) {
-        Ok(_) => (),
-        Err(e) => {
-            eprintln!("[Error] Could not write to file. {}", e);
-            exit(1);
-        }
-    }
 }
 
 fn overwrite_checks(arguments: &ArgMatches) {
