@@ -9,15 +9,15 @@ all: rust git-diff-check
 
 rust: format lint build test
 
-.PHONY format
+.PHONY: format
 format:
 > cargo fmt -- --check --files-with-diff
 
-.PHONY lint
+.PHONY: lint
 lint:
 > cargo clippy -- --deny clippy::all
 
-.PHONY build
+.PHONY: build
 build:
 > cargo build
 
