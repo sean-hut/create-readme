@@ -16,7 +16,7 @@ fn main() {
                 .takes_value(true)
                 .multiple(false)
                 .display_order(1)
-                .help("Top heading text that follows \"# \""),
+                .help("Top heading TEXT that follows \"# \""),
         )
         .arg(
             Arg::with_name("license")
@@ -31,7 +31,7 @@ fn main() {
                 .takes_value(true)
                 .multiple(false)
                 .display_order(2)
-                .help("Select a LICENSE"),
+                .help("Select a LICENSE\n"),
         )
         .arg(
             Arg::with_name("overwrite")
