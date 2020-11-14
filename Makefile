@@ -1,37 +1,28 @@
 # Use > instead of a tab as recipe prefixes.
 .RECIPEPREFIX = >
 
-####################
-# Internal variables
-####################
-
-main = src/main.rs
-side-effects = src/side_effects.rs
-sections = src/sections/
-checks = $(sections)changelog.rs $(sections)contributing.rs \
-$(sections)documentation.rs $(sections)example_use.rs \
-$(sections)license.rs $(sections)overview.rs \
-$(sections)versions.rs
-rust-files = $(main) $(side-effects) $(checks)
-
 #######
 # rules
 #######
 
-all: rust-format rust-clippy-lints build test git-diff-check
+all: rust git-diff-check
 
-rust-all: rust-format rust-clippy-lints build test
+rust: format lint build test
 
-rust-format: $(rust-files)
+.PHONY format
+format:
 > cargo fmt -- --check --files-with-diff
 
-rust-clippy-lints: $(rust-files)
+.PHONY lint
+lint:
 > cargo clippy -- --deny clippy::all
 
-build: $(rust-files)
+.PHONY build
+build:
 > cargo build
 
-test: $(rust-files)
+.PHONY: test
+test:
 > cargo test
 
 .PHONY: git-diff-check
