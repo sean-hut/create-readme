@@ -1,3 +1,4 @@
+mod licenses;
 mod sections;
 mod side_effects;
 
