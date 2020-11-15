@@ -31,3 +31,24 @@ pub fn overwrite_checks(arguments: &ArgMatches) {
         exit(1);
     }
 }
+
+pub fn check_license(arguments: &ArgMatches) {
+    let exclude_license: bool = arguments.is_present("exclude-license");
+    let license: bool = arguments.is_present("license");
+
+    if exclude_license && license {
+        eprintln!(
+            "[Error] The --exclude-license flag and the \
+             --license option can not be used together."
+        );
+        exit(1);
+    }
+
+    if !exclude_license && !license {
+        eprintln!(
+            "[Error] The --license option must be used if \
+             the --exclude-license flag is not used."
+        );
+        exit(1);
+    }
+}

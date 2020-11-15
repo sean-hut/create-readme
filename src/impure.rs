@@ -14,12 +14,17 @@ use crate::sections::{
 };
 
 use crate::side_effects::{
-    checks::overwrite_checks, license::licence_section, output::succes_message, section::section,
+    checks::{check_license, overwrite_checks},
+    license::licence_section,
+    output::succes_message,
+    section::section,
     top_heading::top_heading,
 };
 
 pub fn create_readme(arguments: ArgMatches) {
     overwrite_checks(&arguments);
+
+    check_license(&arguments);
 
     top_heading(&arguments);
 
