@@ -27,7 +27,7 @@ fn main() {
                 .possible_value("mit0")
                 .possible_value("unlicense")
                 .possible_value("cc0")
-                .required(true)
+                .required(false)
                 .takes_value(true)
                 .multiple(false)
                 .display_order(2)
