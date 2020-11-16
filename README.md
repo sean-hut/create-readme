@@ -42,6 +42,8 @@ The development version is at the head of the `develop` branch.
 
 ## Stable Versions
 
+The current stable version is `0.1.0`.
+
 Stable releases are tagged on the `releases` branch.
 
 The [SemVar][semvar] version of semantic versioning is used.
